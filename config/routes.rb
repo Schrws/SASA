@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  get '/download' => 'home#download'
-  get '/work' => 'work#index'
+  get '/files' => 'files#index'
+  get '/files/download' => 'files#download'
+  get '/files/work' => 'files#index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
