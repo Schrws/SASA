@@ -28,6 +28,7 @@ class FilesController < ApplicationController
   def work
     @data = ''
     #Document.delete_all
+    #return
     update_home 'http://sasa.sjeduhs.kr/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000002239&menuId=MNU_0000000000003262&pageIndex='
     update_home 'http://sasa.sjeduhs.kr/cop/bbs/selectBoardList.do?menuId=MNU_0000000000013879&bbsId=BBSMSTR_000000002240&pageIndex='
     update_home "http://sasa.sjeduhs.kr/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000002258&menuId=MNU_0000000000013881&pageIndex="
@@ -52,8 +53,8 @@ class FilesController < ApplicationController
           name = download.meta['content-disposition'].match(/filename=(\"?)(.+)\1/)[2]
           size = download.size
           return if Document.exists?(:name => name, :location => location)
-          @asd = Document.new(:name => name, :size => size, :location => location, :link => link, :uploaded_at => DateTime.parse(date))
-          @data.concat(@asd.save.to_s).concat(' /')
+          @asd = Document.new(:name => name, :size => size, :location => location, :link => link, :uploaded_at => ActiveSupport::TimeZone["Seoul"].parse(date))
+          @data.concat(name).concat(' - ').concat(@asd.save.to_s).concat(' /')
           IO.copy_stream(download, '../files/' + name)
         end
       end

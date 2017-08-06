@@ -14,7 +14,7 @@ $(document).ready(function() {
       $(this).remove();
     }
   };
-  $('.ui.accordion').accordion();
+  //$('.ui.accordion').accordion();
   $('.key').on('click', search.remove);
   $('#add').on('click', search.add);
   $('#clear').on('click', function() {
@@ -37,6 +37,15 @@ $(document).ready(function() {
     for (a in chk) if (chk[a]) b += '1'; else b += '0';
     window.location.href = window.location.pathname+"?"+$.param({'d': d, 'q': q, 'b': b})
   });
+  $('#update').on('click', function() {
+    $(this).addClass('loading');
+    $.ajax({
+      url: '/files/work',
+      success: function(res) {
+        $('#update').removeClass('loading');
+      }
+    });
+  });
   $('#startdate').calendar({
     type: 'date',
     endCalendar: $('#enddate')
@@ -51,21 +60,6 @@ $(document).ready(function() {
 <div class="ui centered grid">
   <div class="row">
     <div class="four wide column">
-      <div class="row">
-        <div class="ui basic segment">
-          <div class="ui segment">
-            <h4><i class="file icon"></i>SASA FILES</h4>
-            <div id="filter" class="ui fluid accordion">
-              <div class="filter title">
-                <i class="dropdown icon"></i>
-                INFO
-              </div>
-              <div class="filter content">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="row">
         <div class="ui basic segment">
           <div class="ui segment">
@@ -140,6 +134,7 @@ $(document).ready(function() {
             <h4><i class="refresh icon"></i>Update</h4>
             <div class="ui hidden divider"></div>
             <div>Last Update : <span id="updated_at"><%= @updated_at %></span></div>
+            <button id="update" class="mini ui red right floated basic button field" style="position: absolute; right: 12px; top: 56px;">Update</button>
           </div>
         </div>
       </div>
