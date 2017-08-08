@@ -132,9 +132,13 @@ $(document).ready(function() {
         <div class="ui basic segment">
           <div class="ui segment">
             <h4><i class="refresh icon"></i>Update</h4>
-            <div class="ui hidden divider"></div>
+            <div class="ui fitted hidden divider"></div>
             <div>Last Update : <span id="updated_at"><%= @updated_at %></span></div>
-            <button id="update" class="mini ui red right floated basic button field" style="position: absolute; right: 12px; top: 56px;">Update</button>
+            <div class="ui hidden divider"></div>
+            <div class="inline fields">
+              <button id="update" class="mini ui red right floated basic button field">Update</button>
+            </div>
+            <div class="ui fitted hidden clearing divider"></div>
           </div>
         </div>
       </div>
