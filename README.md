@@ -1,4 +1,3 @@
 # SASA
 
-* Files
-- from [SASA Page](http://sasa.sjeduhs.kr)
+* Files from [SASA Page](http://sasa.sjeduhs.kr)
