@@ -57,9 +57,26 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="ui centered grid">
+<style>
+table {
+  table-layout: fixed;
+}
+td:nth-child(1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+th:nth-child(2) {
+  width: 80px;
+}
+th:nth-child(3) {
+  width: 150px;
+}
+</style>
+
+<div class="ui centered stackable grid">
   <div class="row">
-    <div class="four wide column">
+    <div class="five wide column">
       <div class="row">
         <div class="ui basic segment">
           <div class="ui segment">
@@ -92,30 +109,28 @@ $(document).ready(function() {
                 <% end %>
               </div>
               <h5 class="ui dividing header">게시판</h5>
-              <div class="inline fields">
-                <div class="field">
-                  <div class="ui checkbox">
-                    <input type="checkbox" <%= 'checked' if b[0].eql? '1' %>>
-                    <label>공지사항</label>
-                  </div>
+              <div class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" <%= 'checked' if b[0].eql? '1' %>>
+                  <label>공지사항</label>
                 </div>
-                <div class="field">
-                  <div class="ui checkbox">
-                    <input type="checkbox" <%= 'checked' if b[1].eql? '1' %>>
-                    <label>가정통신문</label>
-                  </div>
+              </div>
+              <div class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" <%= 'checked' if b[1].eql? '1' %>>
+                  <label>가정통신문</label>
                 </div>
-                <div class="field">
-                  <div class="ui checkbox">
-                    <input type="checkbox" <%= 'checked' if b[2].eql? '1' %>>
-                    <label>자료실</label>
-                  </div>
+              </div>
+              <div class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" <%= 'checked' if b[2].eql? '1' %>>
+                  <label>자료실</label>
                 </div>
-                <div class="field">
-                  <div class="ui checkbox">
-                    <input type="checkbox" <%= 'checked' if b[3].eql? '1' %>>
-                    <label>대회안내</label>
-                  </div>
+              </div>
+              <div class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" <%= 'checked' if b[3].eql? '1' %>>
+                  <label>대회안내</label>
                 </div>
               </div>
               <div class="ui hidden divider"></div>
@@ -143,24 +158,22 @@ $(document).ready(function() {
         </div>
       </div>
     </div>
-    <div class="nine wide column">
+    <div class="ten wide column">
       <div class="ui basic segment">
         <table class="ui compact table">
           <thead>
             <tr>
               <th>Name</th>
               <th>Size</th>
-              <th>Location</th>
               <th>Date</th>
             </tr>
           </thead>
           <tbody>
             <% @data.each do |d| %>
             <tr>
-              <td><%= link_to d.name, '/files/download?q=' + d.name, :target => '_blank' %></td>
+              <td><%= link_to d.link, :target => '_blank', :style => 'margin-right: 6px;' do %><i class="external icon"></i><% end %><%= link_to d.name, '/files/download?q=' + d.name, :target => '_blank', :style => 'text-overflow: ellipsis' %></td>
               <td><%= number_to_human_size(d.size) %></td>
-              <td><%= link_to d.location, d.link, :target => '_blank' %></td>
-              <td><%= d.uploaded_at %></td>
+              <td><%= d.uploaded_at.strftime '%F %H:%M' %></td>
             </tr>
             <% end %>
           </tbody>
