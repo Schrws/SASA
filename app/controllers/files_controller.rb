@@ -19,7 +19,7 @@ class FilesController < ApplicationController
     b = '1111' if b.nil? || b.empty?
     location = ['공지사항', '가정통신문', '자료실', '대회안내']
     b.split('').each_with_index {|l, i| @data = @data.where.not(:location => location[i]) if l.eql? '0'}
-    @data = @data.order('uploaded_at DESC').page(params[:page]).per(20)
+    @data = @data.order('uploaded_at DESC').page(params[:p]).per(20)
   end
   def download
     send_file '../files/' + params[:q]
@@ -52,7 +52,7 @@ class FilesController < ApplicationController
           download = open('http://sasa.sjeduhs.kr' + q.xpath("td/a/@href").text.strip)
           name = download.meta['content-disposition'].match(/filename=(\"?)(.+)\1/)[2]
           size = download.size
-          return if Document.exists?(:name => name, :location => location)
+          return if Document.exists?(:name => name, :location => location, :link => link)
           @asd = Document.new(:name => name, :size => size, :location => location, :link => link, :uploaded_at => ActiveSupport::TimeZone["Seoul"].parse(date))
           @data.concat(name).concat(' - ').concat(@asd.save.to_s).concat(' /')
           IO.copy_stream(download, '../files/' + name)
